@@ -35,3 +35,4 @@ jobs:
           heroku_email: "lehtimki.aino@gmail.com"
           healthcheck: "https://intense-springs-16505.herokuapp.com/health"
           checkstring: "ok"
+          rollbackonhealthcheckfailed: true
