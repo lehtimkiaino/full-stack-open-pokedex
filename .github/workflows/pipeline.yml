@@ -23,6 +23,7 @@ jobs:
       - name: build
         run: npm run build
       - uses: 8398a7/action-slack@v3
+        if: ${{ github.event_name == 'push' }}
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
@@ -67,6 +68,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
       - uses: 8398a7/action-slack@v3
+        if: ${{ github.event_name == 'push' }}
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
