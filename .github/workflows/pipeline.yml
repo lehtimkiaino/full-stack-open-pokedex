@@ -67,7 +67,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
       - name: Slack notification
-        if: ${{ success() }}
+        if: ${{ github.event_name == 'push' && success() }}
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
