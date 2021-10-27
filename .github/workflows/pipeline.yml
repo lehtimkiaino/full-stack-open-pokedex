@@ -22,6 +22,13 @@ jobs:
         run: npm run eslint
       - name: build
         run: npm run build
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          if: failure()
       - name: test
         run: npm run test
       - name: e2e tests
@@ -40,9 +47,17 @@ jobs:
           healthcheck: "https://intense-springs-16505.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          if: success()
       - uses: actions/checkout@v2
       - name: Bump version and push tag
         if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '#skip') == false}}
-        uses: anothrNick/github-tag-action@1.36.0
+        uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
+        
