@@ -31,9 +31,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   deploy:
+    if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '#skip') == false}}
     runs-on: ubuntu-18.04
     steps:
-      - if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '#skip') == false}}
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
