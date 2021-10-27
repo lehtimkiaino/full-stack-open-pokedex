@@ -34,14 +34,14 @@ jobs:
       - name: Deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "intense-springs-16505"
           heroku_email: "lehtimki.aino@gmail.com"
           healthcheck: "https://intense-springs-16505.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      if: ${{ github.event_name == 'pull' }}
       - name: Bump version and push tag
-        if: ${{ github.event_name == 'pull' }}
         uses: anothrNick/github-tag-action@1.33.0
         env:
-        GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
