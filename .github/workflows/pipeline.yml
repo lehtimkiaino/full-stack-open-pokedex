@@ -10,7 +10,6 @@ on:
 
 jobs:
   simple_deployment_pipeline:
-    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -32,6 +31,7 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: Deploy to heroku
+        if: ${{ github.event_name == 'push' }}
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -41,7 +41,7 @@ jobs:
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
       - name: Bump version and push tag
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'push' }}
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
