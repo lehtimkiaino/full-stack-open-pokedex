@@ -14,4 +14,5 @@ jobs:
           url: https://intense-springs-16505.herokuapp.com/ping
           follow-redirect: no
           max-attempts: 3
-          retry-delay: 5sretry-all: no
+          retry-delay: 5s
+          retry-all: no
