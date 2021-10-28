@@ -12,7 +12,4 @@ jobs:
         uses: jtalk/url-health-check-action@v2
         with:
           url: https://intense-springs-16505.herokuapp.com/ping
-          follow-redirect: no
-          max-attempts: 3
-          retry-delay: 5s
-          retry-all: no
+          checkstring: "pong"
